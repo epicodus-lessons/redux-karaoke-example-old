@@ -26,6 +26,14 @@ const reducer = (state = initialState, action) => {
         currentLyric: state.songLyricsArray[newPosition]
       }
       return newState;
+    case 'RESTART_SONG':
+      newState = {
+        songLyricsString: state.songLyricsString,
+        songLyricsArray: state.songLyricsArray,
+        arrayPosition: 0,
+        currentLyric: state.songLyricsArray[0]
+      }
+      return newState;
     default:
       return state;
   }
@@ -47,6 +55,15 @@ expect(
   currentLyric: songLyricsArray[1]
 });
 
+expect(
+  reducer({
+    songLyricsString: songLyricsString,
+    songLyricsArray: songLyricsArray,
+    arrayPosition: 1,
+    currentLyric: songLyricsArray[1]
+  }, { type: 'RESTART_SONG' })
+).toEqual(initialState);
+
 // REDUX STORE
 const { createStore } = Redux;
 const store = createStore(reducer);
@@ -63,9 +80,12 @@ window.onload = function() {
 
 // CLICK LISTENER
 const userClick = () => {
-  console.log('click');
-  store.dispatch({ type: 'NEXT_LYRIC'} );
-  console.log(store.getState());
+  const currentState = store.getState();
+  if (currentState.arrayPosition === currentState.songLyricsArray.length - 1) {
+    store.dispatch({ type: 'RESTART_SONG' } );
+  } else {
+    store.dispatch({ type: 'NEXT_LYRIC' } );
+  }
 }
 
 // SUBSCRIBE TO REDUX STORE
