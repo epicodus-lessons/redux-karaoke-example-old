@@ -50,8 +50,16 @@ expect(
 // REDUX STORE
 const { createStore } = Redux;
 const store = createStore(reducer);
-
 console.log(store.getState());
+
+// RENDERING STATE IN DOM
+const render = () => {
+  document.getElementById('lyrics').innerHTML = store.getState().currentLyric;
+}
+
+window.onload = function() {
+  render();
+}
 
 // CLICK LISTENER
 const userClick = () => {
