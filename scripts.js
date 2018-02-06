@@ -13,10 +13,12 @@ const initialState = {
 
 console.log(initialState);
 
-// REDUCER WILL GO HERE
+// REDUX REDUCER
+const reducer = (state = initialState, action) => {
+  return state;
+}
 
 // JEST TESTS + SETUP
-
 const { expect } = window;
 
 expect(
