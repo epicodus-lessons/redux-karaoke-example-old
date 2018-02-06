@@ -15,7 +15,20 @@ console.log(initialState);
 
 // REDUX REDUCER
 const reducer = (state = initialState, action) => {
-  return state;
+  let newState;
+  switch (action.type) {
+    case 'NEXT_LYRIC':
+      let newPosition = state.arrayPosition + 1;
+      newState = {
+        songLyricsString: state.songLyricsString,
+        songLyricsArray: state.songLyricsArray,
+        arrayPosition: newPosition,
+        currentLyric: state.songLyricsArray[newPosition]
+      }
+      return newState;
+    default:
+      return state;
+  }
 }
 
 // JEST TESTS + SETUP
@@ -24,6 +37,15 @@ const { expect } = window;
 expect(
   reducer(initialState, { type: null })
 ).toEqual(initialState);
+
+expect(
+  reducer(initialState, { type: 'NEXT_LYRIC' })
+).toEqual({
+  songLyricsString: songLyricsString,
+  songLyricsArray: songLyricsArray,
+  arrayPosition: 1,
+  currentLyric: songLyricsArray[1]
+});
 
 // REDUX STORE
 const { createStore } = Redux;
