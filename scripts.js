@@ -67,3 +67,6 @@ const userClick = () => {
   store.dispatch({ type: 'NEXT_LYRIC'} );
   console.log(store.getState());
 }
+
+// SUBSCRIBE TO REDUX STORE
+store.subscribe(render);
